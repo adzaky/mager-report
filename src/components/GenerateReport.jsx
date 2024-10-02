@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PlusCircle, X } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card";
@@ -10,6 +10,7 @@ import TimePicker from "./TimePicker";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 import Link from "next/link";
+import { Checkbox } from "./ui/checkbox";
 
 const GenerateReport = () => {
   const [fullName, setFullName] = useState("");
@@ -19,6 +20,18 @@ const GenerateReport = () => {
   ]);
   const [reportStatus, setReportStatus] = useState("Incomplete");
   const [loading, setLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+
+  useEffect(() => {
+    const savedFullName = localStorage.getItem("fullName");
+    const savedPhoneNumber = localStorage.getItem("phoneNumber");
+
+    if (savedFullName && savedPhoneNumber) {
+      setFullName(savedFullName);
+      setPhoneNumber(savedPhoneNumber);
+      setRememberMe(true);
+    }
+  }, []);
 
   const addTask = () => {
     setTasks([
@@ -64,6 +77,22 @@ ${taskList}`;
     window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, "_blank");
   };
 
+  const handleRememberMeChange = (e) => {
+    setRememberMe(e?.target?.checked);
+    if (e?.target?.checked) {
+      localStorage.setItem("fullName", fullName);
+      localStorage.setItem("phoneNumber", phoneNumber);
+    } else {
+      localStorage.removeItem("fullName");
+      localStorage.removeItem("phoneNumber");
+    }
+  };
+
+  useEffect(() => {
+    localStorage.setItem("fullName", fullName);
+    localStorage.setItem("phoneNumber", phoneNumber);
+  }, [fullName, phoneNumber, rememberMe]);
+
   return (
     <Card className="mx-auto w-full rounded-2xl">
       <CardHeader className="md:mb-6 md:mt-4">
@@ -106,6 +135,10 @@ ${taskList}`;
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
             />
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox id="rememberMe" defaultChecked onCheckedChange={handleRememberMeChange} />
+            <Label htmlFor="rememberMe">Remember Me</Label>
           </div>
           <div className="space-y-2">
             <Label htmlFor="reportStatus">Report Status</Label>
