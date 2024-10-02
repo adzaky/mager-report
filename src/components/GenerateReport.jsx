@@ -36,11 +36,11 @@ const GenerateReport = () => {
   const addTask = () => {
     setTasks((prevTasks) => {
       const lastTask = prevTasks[prevTasks.length - 1];
-      const newStartTime = lastTask ? lastTask.endTime : "08:00";
+      const newStartTime = lastTask ? lastTask?.endTime : "08:00";
 
-      const [hours, minutes] = newStartTime.split(":").map(Number);
+      const [hours, minutes] = newStartTime?.split(":").map(Number);
       const newEndTimeDate = new Date(0, 0, 0, hours, minutes + 30);
-      const newEndTime = `${newEndTimeDate.getHours().toString().padStart(2, "0")}:${newEndTimeDate.getMinutes().toString().padStart(2, "0")}`;
+      const newEndTime = `${newEndTimeDate?.getHours().toString().padStart(2, "0")}:${newEndTimeDate?.getMinutes().toString().padStart(2, "0")}`;
 
       return [
         ...prevTasks,
@@ -72,7 +72,7 @@ const GenerateReport = () => {
     const taskList = tasks
       .map(
         (task) =>
-          `[${reportStatus === "Complete" ? "done" : "todo"}] ${task.description} (${task.startTime}-${task.endTime})`
+          `[${reportStatus === "Complete" ? "done" : "todo"}] ${task.description}${reportStatus === "Complete" ? ` (${task.startTime}-${task.endTime})` : ""}`
       )
       .join("\n");
 
@@ -101,6 +101,12 @@ ${taskList}`;
     localStorage.setItem("fullName", fullName);
     localStorage.setItem("phoneNumber", phoneNumber);
   }, [fullName, phoneNumber, rememberMe]);
+
+  useEffect(() => {
+    if (reportStatus === "Incomplete") {
+      setReportStatus("Incomplete");
+    }
+  }, [reportStatus]);
 
   return (
     <Card className="mx-auto w-full rounded-2xl">
@@ -151,9 +157,9 @@ ${taskList}`;
           </div>
           <div className="space-y-2">
             <Label htmlFor="reportStatus">Report Status</Label>
-            <Select value={reportStatus} onValueChange={(value) => setReportStatus(value)}>
+            <Select onValueChange={(value) => setReportStatus(value)}>
               <SelectTrigger>
-                <SelectValue placeholder="Choose report status" />
+                <SelectValue placeholder="Select Report Status (Complete/Incomplete)" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="Complete">Complete</SelectItem>
