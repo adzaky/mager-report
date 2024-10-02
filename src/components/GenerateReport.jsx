@@ -134,9 +134,9 @@ ${taskList}`;
                   </Button>
                 </div>
                 {reportStatus !== "Incomplete" && (
-                  <div className="flex items-center gap-2">
-                    <span>Work Time:</span>
-                    <div className="ml-auto flex items-center justify-evenly gap-2">
+                  <div className="flex flex-col gap-2 max-md:py-2 md:flex-row md:items-center">
+                    <span className="max-md:text-center">Work Time:</span>
+                    <div className="flex flex-col items-center justify-evenly md:ml-auto md:flex-row md:gap-2">
                       <TimePicker
                         value={task.startTime}
                         onChange={(value) => updateTask(task.id, { startTime: value })}
