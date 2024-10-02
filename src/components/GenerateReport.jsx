@@ -158,7 +158,7 @@ ${taskList}`;
           <div className="space-y-2">
             <Label htmlFor="reportStatus">Report Status</Label>
             <Select onValueChange={(value) => setReportStatus(value)}>
-              <SelectTrigger>
+              <SelectTrigger className="text-start">
                 <SelectValue placeholder="Select Report Status (Complete/Incomplete)" />
               </SelectTrigger>
               <SelectContent>
@@ -178,7 +178,7 @@ ${taskList}`;
                     onChange={(e) => updateTask(task.id, { description: e.target.value })}
                   />
                   <Button type="button" variant="destructive" onClick={() => removeTask(task.id)}>
-                    <X className="mr-2 h-4 w-4" /> Remove
+                    <X className="size-4" />
                   </Button>
                 </div>
                 {reportStatus !== "Incomplete" && (
