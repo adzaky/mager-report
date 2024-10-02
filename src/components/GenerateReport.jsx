@@ -34,16 +34,25 @@ const GenerateReport = () => {
   }, []);
 
   const addTask = () => {
-    setTasks([
-      ...tasks,
-      {
-        id: Date.now(),
-        description: "",
-        status: "Incomplete",
-        startTime: "08:00",
-        endTime: "17:00",
-      },
-    ]);
+    setTasks((prevTasks) => {
+      const lastTask = prevTasks[prevTasks.length - 1];
+      const newStartTime = lastTask ? lastTask.endTime : "08:00";
+
+      const [hours, minutes] = newStartTime.split(":").map(Number);
+      const newEndTimeDate = new Date(0, 0, 0, hours, minutes + 30);
+      const newEndTime = `${newEndTimeDate.getHours().toString().padStart(2, "0")}:${newEndTimeDate.getMinutes().toString().padStart(2, "0")}`;
+
+      return [
+        ...prevTasks,
+        {
+          id: Date.now(),
+          description: "",
+          status: "Incomplete",
+          startTime: newStartTime,
+          endTime: newEndTime,
+        },
+      ];
+    });
   };
 
   const updateTask = (id, updates) => {
