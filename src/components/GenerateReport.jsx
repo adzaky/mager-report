@@ -11,6 +11,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 import Link from "next/link";
 import { Checkbox } from "./ui/checkbox";
+import { CopyButton } from "./ui/copy-button";
+import { ShareEmail } from "./ui/share-email";
 
 const GenerateReport = () => {
   const [fullName, setFullName] = useState("");
@@ -21,6 +23,16 @@ const GenerateReport = () => {
   const [reportStatus, setReportStatus] = useState("Incomplete");
   const [loading, setLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [reportMessage, setReportMessage] = useState("");
+
+  const taskList = tasks
+    .map(
+      (task) =>
+        `[${reportStatus === "Complete" ? "done" : "todo"}] ${task.description}${reportStatus === "Complete" ? ` (${task.startTime}-${task.endTime})` : ""}`
+    )
+    .join("\n");
+
+  const message = `dailyreport\n${fullName}\n\n${reportStatus}:\n${taskList}`;
 
   useEffect(() => {
     const savedFullName = localStorage.getItem("fullName");
@@ -63,24 +75,15 @@ const GenerateReport = () => {
     setTasks(tasks.filter((task) => task.id !== id));
   };
 
+  useEffect(() => {
+    setReportMessage(message);
+  }, [message]);
+
   const generateMessage = () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
     }, 1000);
-
-    const taskList = tasks
-      .map(
-        (task) =>
-          `[${reportStatus === "Complete" ? "done" : "todo"}] ${task.description}${reportStatus === "Complete" ? ` (${task.startTime}-${task.endTime})` : ""}`
-      )
-      .join("\n");
-
-    const message = `dailyreport
-${fullName}
-
-${reportStatus}:
-${taskList}`;
 
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, "_blank");
@@ -202,7 +205,16 @@ ${taskList}`;
           </div>
         </form>
       </CardContent>
-      <CardFooter>
+      <CardFooter className="flex flex-col items-center gap-2">
+        <div className="max-xs:flex-wrap flex w-full items-center gap-2">
+          <ShareEmail variant="outline" body={message} />
+          <CopyButton
+            variant="outline"
+            value={reportMessage}
+            setReportMessage={setReportMessage}
+            className="max-xs:w-full"
+          />
+        </div>
         <Button disabled={loading === true} className="w-full" onClick={generateMessage}>
           Generate Report
         </Button>
