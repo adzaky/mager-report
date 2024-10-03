@@ -10,8 +10,8 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  title: "Educourse Daily Report Generator",
-  description: "Dailyreport Generator for lazyass peeps by lazy peeps",
+  title: "Educourse Daily Report Formatter",
+  description: "Formatter made by a lazy person for lazy people",
 };
 
 export default function RootLayout({ children }) {

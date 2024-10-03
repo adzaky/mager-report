@@ -14,7 +14,7 @@ import { Checkbox } from "./ui/checkbox";
 import { CopyButton } from "./ui/copy-button";
 import { ShareEmail } from "./ui/share-email";
 
-const GenerateReport = () => {
+const FormatReport = () => {
   const [fullName, setFullName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [tasks, setTasks] = useState([
@@ -79,7 +79,7 @@ const GenerateReport = () => {
     setReportMessage(message);
   }, [message]);
 
-  const generateMessage = () => {
+  const formatMessage = () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
@@ -115,7 +115,7 @@ const GenerateReport = () => {
     <Card className="mx-auto w-full rounded-2xl">
       <CardHeader className="md:mb-6 md:mt-4">
         <CardTitle className="text-base font-bold md:text-center md:text-2xl">
-          Educourse Daily Report Generator
+          Educourse Daily Report Formatter
         </CardTitle>
         <CardDescription className="md:text-center">
           Made by a{" "}
@@ -215,12 +215,12 @@ const GenerateReport = () => {
             className="max-xs:w-full"
           />
         </div>
-        <Button disabled={loading === true} className="w-full" onClick={generateMessage}>
-          Generate Report
+        <Button disabled={loading === true} className="w-full" onClick={formatMessage}>
+          Send to WhatsApp
         </Button>
       </CardFooter>
     </Card>
   );
 };
 
-export default GenerateReport;
+export default FormatReport;
