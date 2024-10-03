@@ -25,6 +25,11 @@ const FormatReport = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [reportMessage, setReportMessage] = useState("");
 
+  const formatPhoneNumber = (phoneNumber) => {
+    const phoneNumberWithCountryCode = phoneNumber.startsWith("08") ? `62${phoneNumber.substring(1)}` : phoneNumber;
+    return phoneNumberWithCountryCode;
+  };
+
   const taskList = tasks
     .map(
       (task) =>
@@ -86,7 +91,7 @@ const FormatReport = () => {
     }, 1000);
 
     const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, "_blank");
+    window.open(`https://wa.me/${formatPhoneNumber(phoneNumber)}?text=${encodedMessage}`, "_blank");
   };
 
   const handleRememberMeChange = (e) => {
