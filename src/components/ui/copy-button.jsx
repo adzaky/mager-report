@@ -14,7 +14,7 @@ const copyToClipboardWithMeta = async (value, event) => {
   }
 };
 
-const CopyButton = ({ value, className, src, variant, event, setReportMessage, ...props }) => {
+const CopyButton = ({ value, className, src, type, variant, event, ...props }) => {
   const [hasCopied, setHasCopied] = useState(false);
 
   useEffect(() => {
@@ -26,10 +26,10 @@ const CopyButton = ({ value, className, src, variant, event, setReportMessage, .
   return (
     <Button
       size="icon"
+      type={type}
       variant={variant}
-      className={cn("relative z-10 flex items-center justify-center p-2 [&_svg]:size-full", className)}
+      className={cn("relative z-10 flex items-center justify-center p-2 [&_svg]:size-5", className)}
       onClick={() => {
-        setReportMessage(value);
         copyToClipboardWithMeta(value, event);
         setHasCopied(true);
       }}
