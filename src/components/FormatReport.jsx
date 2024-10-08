@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { PlusCircle, Save, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -15,6 +16,12 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import TimePicker from "./TimePicker";
 
 const FormatReport = () => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const magerUserDetails = typeof localStorage !== "undefined" ? localStorage?.getItem("magerReportUserDetails") : null;
   const parsedDetails = magerUserDetails ? JSON.parse(magerUserDetails) : {};
 
@@ -95,7 +102,7 @@ const FormatReport = () => {
       .padStart(2, "0")}`;
 
     append({
-      id: Date.now(),
+      id: fields.length + 1,
       description: "",
       startTime: newStartTime,
       endTime: newEndTime,
@@ -189,7 +196,7 @@ const FormatReport = () => {
             />
             <div className="space-y-2">
               <FormLabel>Tasks</FormLabel>
-              {fields.map((field, index) => (
+              {isClient && fields.map((field, index) => (
                 <div key={field.id} className="space-y-2 rounded-md border p-4">
                   <FormField
                     control={form.control}
@@ -246,7 +253,7 @@ const FormatReport = () => {
             </div>
           </CardContent>
           <CardFooter className="flex flex-col items-center gap-2">
-            <div className="max-xs:flex-wrap flex w-full items-center gap-2">
+            <div className="flex w-full items-center gap-2 max-xs:flex-wrap">
               <ShareEmail variant="outline" body={generateMessage(form.getValues())} />
               <CopyButton
                 type="button"
