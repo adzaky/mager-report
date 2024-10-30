@@ -196,64 +196,65 @@ const FormatReport = () => {
             />
             <div className="space-y-2">
               <FormLabel>Tasks</FormLabel>
-              {isClient && fields.map((field, index) => (
-                <div key={field.id} className="space-y-2 rounded-md border p-4">
-                  <FormField
-                    control={form.control}
-                    name={`tasks.${index}.description`}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <div className="flex items-center gap-2">
-                            <Input placeholder={`Task ${index + 1}`} {...field} />
-                            <Button type="button" variant="destructive" onClick={() => remove(index)}>
-                              <X className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  {watchReportStatus === "Complete" && (
-                    <div className="flex flex-col gap-2 max-md:py-2 md:flex-row md:items-center">
-                      <span className="max-md:text-center">Work Time:</span>
-                      <div className="flex flex-col items-center justify-evenly md:ml-auto md:flex-row md:gap-2">
-                        <FormField
-                          control={form.control}
-                          name={`tasks.${index}.startTime`}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormControl>
-                                <TimePicker value={field.value} onChange={field.onChange} />
-                              </FormControl>
-                            </FormItem>
-                          )}
-                        />
-                        <span className="text-lg">-</span>
-                        <FormField
-                          control={form.control}
-                          name={`tasks.${index}.endTime`}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormControl>
-                                <TimePicker value={field.value} onChange={field.onChange} />
-                              </FormControl>
-                            </FormItem>
-                          )}
-                        />
+              {isClient &&
+                fields.map((field, index) => (
+                  <div key={field.id} className="space-y-2 rounded-md border p-4">
+                    <FormField
+                      control={form.control}
+                      name={`tasks.${index}.description`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <div className="flex items-center gap-2">
+                              <Input placeholder={`Task ${index + 1}`} {...field} />
+                              <Button type="button" variant="destructive" onClick={() => remove(index)}>
+                                <X className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    {watchReportStatus === "Complete" && (
+                      <div className="flex flex-col gap-2 max-md:py-2 md:flex-row md:items-center">
+                        <span className="max-md:text-center">Work Time:</span>
+                        <div className="flex flex-col items-center justify-evenly md:ml-auto md:flex-row md:gap-2">
+                          <FormField
+                            control={form.control}
+                            name={`tasks.${index}.startTime`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormControl>
+                                  <TimePicker value={field.value} onChange={field.onChange} />
+                                </FormControl>
+                              </FormItem>
+                            )}
+                          />
+                          <span className="text-lg">-</span>
+                          <FormField
+                            control={form.control}
+                            name={`tasks.${index}.endTime`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormControl>
+                                  <TimePicker value={field.value} onChange={field.onChange} />
+                                </FormControl>
+                              </FormItem>
+                            )}
+                          />
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </div>
-              ))}
+                    )}
+                  </div>
+                ))}
               <Button type="button" variant="outline" className="w-full" onClick={addTask}>
                 <PlusCircle className="mr-2 h-4 w-4" /> Add Task
               </Button>
             </div>
           </CardContent>
           <CardFooter className="flex flex-col items-center gap-2">
-            <div className="flex w-full items-center gap-2 max-xs:flex-wrap">
+            <div className="max-xs:flex-wrap flex w-full items-center gap-2">
               <ShareEmail variant="outline" body={generateMessage(form.getValues())} />
               <CopyButton
                 type="button"
