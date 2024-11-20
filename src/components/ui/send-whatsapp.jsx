@@ -14,8 +14,8 @@ const SendWhatsapp = ({ body, variant }) => {
       }}
       className="w-full"
     >
-      <FaWhatsapp className="xs:mr-2 xs:size-4 size-full" />
-      <span className="max-xs:hidden">Send to Whatsapp</span>
+      <FaWhatsapp className="sm:mr-2 sm:size-4 size-full" />
+      <span className="max-sm:hidden">Send to Whatsapp</span>
     </Button>
   );
 };

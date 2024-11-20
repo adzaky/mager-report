@@ -20,8 +20,8 @@ const ShareEmail = ({ body, variant }) => {
       }}
       className="w-full"
     >
-      <Mail className="xs:mr-2 xs:size-4 size-full" />
-      <span className="max-xs:hidden">Send to GMail</span>
+      <Mail className="sm:mr-2 sm:size-4 size-full" />
+      <span className="max-sm:hidden">Send to GMail</span>
     </Button>
   );
 };

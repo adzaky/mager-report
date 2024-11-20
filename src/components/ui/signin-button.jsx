@@ -4,7 +4,7 @@ import { Button } from "./button";
 const SignIn = () => {
   return (
     <SignInButton>
-      <Button variant="destructive" className="px-6 font-bold">
+      <Button variant="destructive" className="w-full px-6 font-bold">
         Sign In
       </Button>
     </SignInButton>
