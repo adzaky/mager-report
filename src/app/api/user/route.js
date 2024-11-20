@@ -39,13 +39,22 @@ export async function POST(req) {
   }
 
   try {
-    const res = await db.collection("users").insertOne({ ...data, userId, created_at: new Date() });
+    const timestamp = new Date();
 
-    if (!res.insertedId) {
-      throw new Error("Posting daily report failed.");
+    const res = await db.collection("users").updateOne(
+      { userId },
+      {
+        $set: { ...data, updated_at: timestamp },
+        $setOnInsert: { userId, created_at: timestamp },
+      },
+      { upsert: true }
+    );
+
+    if (!res.matchedCount && !res.upsertedCount) {
+      throw new Error("Saving user data failed.");
     }
 
-    return NextResponse.json(successPayload({ message: "Posting daily report successfully.", data: data, code: 201 }), {
+    return NextResponse.json(successPayload({ message: "Saving user data successfully.", data: data, code: 201 }), {
       status: 201,
     });
   } catch (err) {
