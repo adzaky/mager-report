@@ -21,6 +21,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import TimePicker from "@/components/ui/time-picker";
 import { LoadingButton } from "@/components/ui/loading-button";
 import { SendWhatsapp } from "@/components/ui/send-whatsapp";
+import { SignedIn } from "@clerk/nextjs";
 
 const FormatReport = () => {
   const { loading: postUserDataLoading, submitUserData } = useSubmitUserData();
@@ -212,13 +213,11 @@ const FormatReport = () => {
                   className="max-xs:w-full"
                 />
               </div>
-              <LoadingButton
-                type="submit"
-                className="w-full"
-                loading={postUserDataLoading || postReportLoading}
-              >
-                Save Data
-              </LoadingButton>
+              <SignedIn>
+                <LoadingButton type="submit" className="w-full" loading={postUserDataLoading || postReportLoading}>
+                  Save Data
+                </LoadingButton>
+              </SignedIn>
             </CardFooter>
           </form>
         </Form>
