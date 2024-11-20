@@ -1,14 +1,14 @@
-import { useClerk } from "@clerk/nextjs";
+import { SignOutButton } from "@clerk/nextjs";
 import { Button } from "./button";
 
-const SignOutButton = () => {
-  const { signOut } = useClerk();
-
+const SignOut = () => {
   return (
-    <Button variant="destructive" className="px-6 font-bold" onClick={() => signOut({ redirectUrl: "/sign-in" })}>
-      Sign Out
-    </Button>
+    <SignOutButton>
+      <Button variant="destructive" className="px-6 font-bold">
+        Sign Out
+      </Button>
+    </SignOutButton>
   );
 };
 
-export default SignOutButton;
+export default SignOut;
