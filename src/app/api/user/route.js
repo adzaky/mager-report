@@ -10,14 +10,14 @@ export async function GET() {
   const { userId } = await auth();
 
   try {
-    const dailyReport = await db.collection("users").find({ userId }).sort({ created_at: -1 }).toArray();
+    const users = await db.collection("users").find({ userId }).sort({ created_at: -1 }).toArray();
 
-    if (dailyReport.length === 0) {
-      return NextResponse.json(errorPayload({ message: "Daily report not found." }, 404));
+    if (users.length === 0) {
+      return NextResponse.json(errorPayload({ message: "User not found." }, 404));
     }
 
     return NextResponse.json(
-      successPayload({ data: dailyReport, message: "Fetching daily report successfully.", code: 200 }),
+      successPayload({ data: users, message: "Fetching user data successfully.", code: 200 }),
       { status: 200 }
     );
   } catch (err) {
