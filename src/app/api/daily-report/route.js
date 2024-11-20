@@ -16,10 +16,6 @@ export async function GET() {
   try {
     const dailyReport = await db.collection("tasks").find({ userId }).sort({ created_at: -1 }).toArray();
 
-    if (dailyReport.length === 0) {
-      return NextResponse.json(errorPayload({ message: "Daily report not found." }, 404), { status: 404 });
-    }
-
     return NextResponse.json(
       successPayload({ data: dailyReport, message: "Fetching daily report successfully.", code: 200 }),
       { status: 200 }

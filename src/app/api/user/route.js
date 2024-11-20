@@ -16,10 +16,6 @@ export async function GET() {
   try {
     const users = await db.collection("users").find({ userId }).sort({ created_at: -1 }).toArray();
 
-    if (users.length === 0) {
-      return NextResponse.json(errorPayload({ message: "User not found." }, 404), { status: 404 });
-    }
-
     return NextResponse.json(
       successPayload({ data: users, message: "Fetching user data successfully.", code: 200 }),
       { status: 200 }
