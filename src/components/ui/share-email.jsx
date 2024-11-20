@@ -12,7 +12,14 @@ const ShareEmail = ({ body, variant }) => {
   };
 
   return (
-    <Button variant={variant} onClick={handleShare} className="w-full">
+    <Button
+      variant={variant}
+      onClick={(e) => {
+        e.stopPropagation();
+        handleShare(body);
+      }}
+      className="w-full"
+    >
       <Mail className="xs:mr-2 xs:size-4 size-full" />
       <span className="max-xs:hidden">Send to GMail</span>
     </Button>
