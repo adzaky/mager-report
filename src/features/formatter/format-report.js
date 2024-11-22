@@ -22,6 +22,7 @@ import TimePicker from "@/components/ui/time-picker";
 import { LoadingButton } from "@/components/ui/loading-button";
 import { SendWhatsapp } from "@/components/ui/send-whatsapp";
 import { SignedIn } from "@clerk/nextjs";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 const FormatReport = () => {
   const { loading: postUserDataLoading, submitUserData } = useSubmitUserData();
@@ -129,17 +130,22 @@ const FormatReport = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Report Status</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select Report Status" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="Complete">Complete</SelectItem>
-                        <SelectItem value="Incomplete">Incomplete</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <FormControl>
+                      <RadioGroup
+                        value={field.value}
+                        onValueChange={field.onChange}
+                        className="flex items-center gap-2"
+                      >
+                        <RadioGroupItem value="Complete" id="complete" />
+                        <FormLabel htmlFor="complete" className="text-sm font-medium">
+                          Complete
+                        </FormLabel>
+                        <RadioGroupItem value="Incomplete" id="incomplete" />
+                        <FormLabel htmlFor="incomplete" className="text-sm font-medium">
+                          Incomplete
+                        </FormLabel>
+                      </RadioGroup>
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
