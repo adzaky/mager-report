@@ -13,13 +13,15 @@ export const useDailyReportForm = ({ userData = [], dailyReport = [] }) => {
   });
 
   useEffect(() => {
-    form.reset({
-      fullName: userData[0]?.fullName || "",
-      phoneNumber: userData[0]?.phoneNumber || "",
-      rememberMe: true,
-      reportStatus: dailyReport[0]?.reportStatus || "Incomplete",
-      tasks: dailyReport[0]?.tasks || [{ id: 1, description: "", startTime: "08:00", endTime: "09:00" }],
-    });
+    if (userData.length > 0 && dailyReport.length > 0) {
+      form.reset({
+        fullName: userData[0].fullName || "",
+        phoneNumber: userData[0].phoneNumber || "",
+        rememberMe: true,
+        reportStatus: dailyReport[0].reportStatus || "Incomplete",
+        tasks: dailyReport[0].tasks || [{ id: 1, description: "", startTime: "08:00", endTime: "09:00" }],
+      });
+    }
   }, [userData, dailyReport, form]);
 
   const { fields, append, remove } = useFieldArray({
