@@ -13,7 +13,7 @@ export const useSubmitUserData = () => {
     } catch (err) {
       toast({
         variant: "destructive",
-        description: err.message || "Something went wrong.",
+        description: err?.message || "Something went wrong.",
       });
     } finally {
       setLoading(false);

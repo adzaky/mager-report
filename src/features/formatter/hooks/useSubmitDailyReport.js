@@ -10,15 +10,15 @@ export const useSubmitDailyReport = () => {
     setLoading(true);
     try {
       const res = await dailyReportService.postReport(data);
-      if (res.status === "success") {
+      if (res?.status === "success") {
         toast({
-          description: res.message,
+          description: res?.message,
         });
       }
     } catch (err) {
       toast({
         variant: "destructive",
-        description: err.message || "Something went wrong.",
+        description: err?.message || "Something went wrong.",
       });
     } finally {
       setLoading(false);

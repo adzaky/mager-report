@@ -13,13 +13,13 @@ export const useGetDailyReport = () => {
 
       try {
         const res = await dailyReportService.getReports();
-        if (res.status === "success") {
-          setData(res.data);
+        if (res?.status === "success") {
+          setData(res?.data);
         }
       } catch (err) {
         toast({
           variant: "destructive",
-          description: err.message || "Something went wrong.",
+          description: err?.message || "Something went wrong.",
         });
       } finally {
         setLoading(false);
