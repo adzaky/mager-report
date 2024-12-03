@@ -44,10 +44,10 @@ export async function POST(req) {
     const res = await db.collection("tasks").insertOne({ ...data, userId, created_at: new Date() });
 
     if (!res.insertedId || tasks.length === 0) {
-      throw new Error("Posting daily report failed.");
+      throw new Error("Saving daily report failed.");
     }
 
-    return NextResponse.json(successPayload({ message: "Posting daily report successfully.", data: data, code: 201 }), {
+    return NextResponse.json(successPayload({ message: "Saving daily report successfully.", data: data, code: 201 }), {
       status: 201,
     });
   } catch (err) {
