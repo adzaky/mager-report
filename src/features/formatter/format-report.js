@@ -11,10 +11,8 @@ import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { CopyButton } from "@/components/ui/copy-button";
-import { ShareEmail } from "@/components/ui/share-email";
 import { PlusCircle, X } from "lucide-react";
 import Link from "next/link";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -219,7 +217,6 @@ const FormatReport = () => {
             </form>
           </Form>
           <div className="max-xs:flex-wrap flex w-full items-center gap-2 p-2">
-            <ShareEmail variant="outline" body={generateMessage(form.getValues())} />
             <SendWhatsapp variant="outline" body={form.getValues()} />
             <CopyButton
               type="button"
