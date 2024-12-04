@@ -5,7 +5,6 @@ import { CheckIcon, CopyIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "./button";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
 
 const copyToClipboardWithMeta = async (value, event) => {
   navigator.clipboard.writeText(value);
@@ -28,20 +27,15 @@ const CopyButton = ({ value, className, src, type, variant, event, ...props }) =
       size="icon"
       type={type}
       variant={variant}
-      className={cn("relative z-10 flex items-center justify-center p-2 [&_svg]:size-5", className)}
+      className={cn("flex w-full items-center justify-center gap-2 p-2", className)}
       onClick={() => {
         copyToClipboardWithMeta(value, event);
         setHasCopied(true);
       }}
       {...props}
     >
-      <TooltipProvider>
-        <Tooltip>
-          <span className="sr-only">Copy</span>
-          <TooltipTrigger asChild>{hasCopied ? <CheckIcon /> : <CopyIcon />}</TooltipTrigger>
-          <TooltipContent>Click to copy</TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+      {hasCopied ? <CheckIcon className="size-full sm:size-4" /> : <CopyIcon className="size-full sm:size-4" />}
+      <span className="max-sm:hidden">Copy to Clipboard</span>
     </Button>
   );
 };

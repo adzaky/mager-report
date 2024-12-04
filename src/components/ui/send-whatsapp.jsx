@@ -1,8 +1,10 @@
-import { Button } from "@/components/ui/button";
 import { useReportUtilities } from "@/features/formatter/hooks/useReportUtilities";
+
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { FaWhatsapp } from "react-icons/fa";
 
-const SendWhatsapp = ({ body, variant }) => {
+const SendWhatsapp = ({ body, variant, className }) => {
   const { sendToWhatsapp } = useReportUtilities();
 
   return (
@@ -12,9 +14,9 @@ const SendWhatsapp = ({ body, variant }) => {
         e.stopPropagation();
         sendToWhatsapp(body);
       }}
-      className="w-full"
+      className={cn("flex w-full items-center justify-center gap-2 p-2", className)}
     >
-      <FaWhatsapp className="sm:mr-2 sm:size-4 size-full" />
+      <FaWhatsapp className="size-full sm:size-4" />
       <span className="max-sm:hidden">Send to Whatsapp</span>
     </Button>
   );

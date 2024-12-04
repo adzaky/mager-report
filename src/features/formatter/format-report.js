@@ -222,7 +222,6 @@ const FormatReport = () => {
               type="button"
               variant="outline"
               value={generateMessage(form.getValues())}
-              className="max-xs:w-full"
             />
           </div>
         </div>
