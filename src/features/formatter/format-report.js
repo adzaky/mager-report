@@ -207,7 +207,7 @@ const FormatReport = () => {
                   </Button>
                 </div>
               </CardContent>
-              <CardFooter className="mt-2 p-2">
+              <CardFooter className="my-2 p-2">
                 <SignedIn>
                   <LoadingButton type="submit" className="w-full" loading={postUserDataLoading || postReportLoading}>
                     Save Data
