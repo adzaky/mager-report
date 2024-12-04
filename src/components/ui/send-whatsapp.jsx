@@ -10,8 +10,7 @@ const SendWhatsapp = ({ body, variant, className }) => {
   return (
     <Button
       variant={variant}
-      onClick={(e) => {
-        e.stopPropagation();
+      onClick={() => {
         sendToWhatsapp(body);
       }}
       className={cn("flex w-full items-center justify-center gap-2 p-2", className)}
