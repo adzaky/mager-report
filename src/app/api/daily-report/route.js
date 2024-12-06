@@ -62,7 +62,7 @@ export async function POST(req) {
         )
       : await db.collection("tasks").insertOne({ ...data, userId, created_at: new Date() });
 
-    if (!res.insertedId || tasks.length === 0) {
+    if ((existing && res.modifiedCount === 0) || (!existing && !res.insertedId) || tasks.length === 0) {
       throw new Error("Saving daily report failed.");
     }
 
