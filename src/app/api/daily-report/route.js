@@ -41,7 +41,18 @@ export async function POST(req) {
   }
 
   try {
-    const existing = await db.collection("tasks").findOne({ userId, created_at: { $gte: new Date().setHours(0, 0, 0, 0) } });
+    const startOfDay = new Date();
+    startOfDay.setUTCHours(0, 0, 0, 0);
+
+    const endOfDay = new Date();
+    endOfDay.setUTCHours(23, 59, 59, 999);
+
+    const existing = await db.collection("tasks").findOne({
+      userId,
+      reportStatus: "Complete",
+      created_at: { $gte: startOfDay, $lte: endOfDay },
+    });
+
     const res = existing
       ? await db.collection("tasks").updateOne(
           { _id: existing._id },
