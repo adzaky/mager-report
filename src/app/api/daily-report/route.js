@@ -41,7 +41,15 @@ export async function POST(req) {
   }
 
   try {
-    const res = await db.collection("tasks").insertOne({ ...data, userId, created_at: new Date() });
+    const existing = await db.collection("tasks").findOne({ userId, created_at: { $gte: new Date().setHours(0, 0, 0, 0) } });
+    const res = existing
+      ? await db.collection("tasks").updateOne(
+          { _id: existing._id },
+          {
+            $set: { ...data, updated_at: new Date() },
+          }
+        )
+      : await db.collection("tasks").insertOne({ ...data, userId, created_at: new Date() });
 
     if (!res.insertedId || tasks.length === 0) {
       throw new Error("Saving daily report failed.");
