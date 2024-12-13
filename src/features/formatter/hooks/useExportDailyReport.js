@@ -20,7 +20,7 @@ export const useExportDailyReport = () => {
           return {
             No: index + 1,
             "Report Status": report?.reportStatus,
-            "Report Date": report?.updated_at ?? report?.created_at,
+            "Report Date": new Intl.DateTimeFormat('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }).format(new Date(report?.updated_at ?? report?.created_at)),
             Tasks: formattedTasks.join("\n"),
           };
         });
