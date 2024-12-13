@@ -12,8 +12,21 @@ export const useExportDailyReport = () => {
     try {
       const res = await dailyReportService.getMonthlyReports();
       if (res?.status === "success") {
+        const exportData = res?.data?.map((report, index) => {
+          const taskDescriptions = report?.tasks?.map((task) => task.description);
+          const taskTimestamps = report?.tasks?.map((task) => `${task.startTime} - ${task.endTime}`);
+          const formattedTasks = taskDescriptions.map((description, i) => `Task ${description} (${taskTimestamps[i]})`);
+
+          return {
+            No: index + 1,
+            "Report Status": report?.reportStatus,
+            "Report Date": report?.updated_at ?? report?.created_at,
+            Tasks: formattedTasks.join("\n"),
+          };
+        });
+
         const workbook = XLSX.utils.book_new();
-        const worksheet = XLSX.utils?.json_to_sheet(res?.data);
+        const worksheet = XLSX.utils?.json_to_sheet(exportData);
 
         XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet 1");
         XLSX.writeFile(workbook, `${title}.xlsx`);
