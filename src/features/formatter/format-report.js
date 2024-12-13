@@ -224,6 +224,7 @@ const FormatReport = () => {
             <CopyButton type="button" variant="outline" value={generateMessage(form.getValues())} />
             <LoadingButton
               type="button"
+              variant="secondary"
               className="col-span-2"
               onClick={() =>
                 exportDailyReport({
