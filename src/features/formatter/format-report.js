@@ -232,7 +232,7 @@ const FormatReport = () => {
                 })
               }
               loading={exportReportLoading}
-            >Export Daily Report to XLSX File</LoadingButton>
+            >Export Monthly Report to XLSX File</LoadingButton>
           </div>
         </div>
       )}
