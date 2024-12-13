@@ -21,7 +21,7 @@ export async function GET() {
     const dailyReport = await db.collection("tasks").find({
       userId,
       created_at: { $gte: firstDayOfMonth, $lte: lastDayOfMonth },
-    }).sort({ created_at: -1 }).toArray();
+    }).sort({ created_at: 1 }).toArray();
 
     return NextResponse.json(
       successPayload({ data: dailyReport, message: "Fetching daily report successfully.", code: 200 }),
