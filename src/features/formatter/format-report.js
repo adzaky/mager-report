@@ -21,6 +21,7 @@ import { LoadingButton } from "@/components/ui/loading-button";
 import { SendWhatsapp } from "@/components/ui/send-whatsapp";
 import { SignedIn } from "@clerk/nextjs";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useExportDailyReport } from "./hooks/useExportDailyReport";
 
 const FormatReport = () => {
   const { loading: postUserDataLoading, submitUserData } = useSubmitUserData();
@@ -28,6 +29,8 @@ const FormatReport = () => {
 
   const { loading: postReportLoading, submitDailyReport } = useSubmitDailyReport();
   const { loading: getReportLoading, data: dailyReport } = useGetDailyReport();
+
+  const { loading: exportReportLoading, exportDailyReport } = useExportDailyReport();
 
   const isLoading = getUserDataLoading || getReportLoading;
 
@@ -216,13 +219,19 @@ const FormatReport = () => {
               </CardFooter>
             </form>
           </Form>
-          <div className="max-xs:flex-wrap flex w-full items-center gap-2 p-2">
-            <SendWhatsapp variant="outline" body={form.getValues()} />
-            <CopyButton
+          <div className="grid w-full grid-cols-1 items-center gap-2 p-2 lg:grid-cols-2">
+            <SendWhatsapp type="button" variant="outline" body={form.getValues()} />
+            <CopyButton type="button" variant="outline" value={generateMessage(form.getValues())} />
+            <LoadingButton
               type="button"
-              variant="outline"
-              value={generateMessage(form.getValues())}
-            />
+              className="col-span-2"
+              onClick={() =>
+                exportDailyReport({
+                  title: `Daily Report ${new Date().toLocaleDateString()}`,
+                })
+              }
+              loading={exportReportLoading}
+            >Export Daily Report to XLSX File</LoadingButton>
           </div>
         </div>
       )}

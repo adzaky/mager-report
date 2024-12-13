@@ -4,11 +4,12 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { FaWhatsapp } from "react-icons/fa";
 
-const SendWhatsapp = ({ body, variant, className }) => {
+const SendWhatsapp = ({ body, type, variant, className }) => {
   const { sendToWhatsapp } = useReportUtilities();
 
   return (
     <Button
+      type={type}
       variant={variant}
       onClick={() => {
         sendToWhatsapp(body);
