@@ -26,10 +26,8 @@ import { useExportDailyReport } from "./hooks/useExportDailyReport";
 const FormatReport = () => {
   const { loading: postUserDataLoading, submitUserData } = useSubmitUserData();
   const { loading: getUserDataLoading, data: userData } = useGetUserData();
-
   const { loading: postReportLoading, submitDailyReport } = useSubmitDailyReport();
   const { loading: getReportLoading, data: dailyReport } = useGetDailyReport();
-
   const { loading: exportReportLoading, exportDailyReport } = useExportDailyReport();
 
   const isLoading = getUserDataLoading || getReportLoading;
@@ -43,6 +41,8 @@ const FormatReport = () => {
   const { generateMessage } = useReportUtilities();
 
   const watchReportStatus = form.watch("reportStatus");
+
+  const currentMonth = new Intl.DateTimeFormat("en-US", { month: "long" }).format(new Date());
 
   const onSubmit = (data) => {
     if (!data) return;
@@ -219,7 +219,7 @@ const FormatReport = () => {
               </CardFooter>
             </form>
           </Form>
-          <div className="grid w-full grid-cols-1 items-center gap-2 p-2 lg:grid-cols-2">
+          <div className="grid w-full grid-cols-2 items-center gap-2 p-2">
             <SendWhatsapp type="button" variant="outline" body={form.getValues()} />
             <CopyButton type="button" variant="outline" value={generateMessage(form.getValues())} />
             <LoadingButton
@@ -228,11 +228,13 @@ const FormatReport = () => {
               className="col-span-2"
               onClick={() =>
                 exportDailyReport({
-                  title: `Monthly Report ${new Intl.DateTimeFormat("en-US", { month: "long" }).format(new Date())}`,
+                  title: `Monthly Report ${currentMonth}`,
                 })
               }
               loading={exportReportLoading}
-            >Export Monthly Report to XLSX File</LoadingButton>
+            >
+              Export Report to Excel ({currentMonth})
+            </LoadingButton>
           </div>
         </div>
       )}
