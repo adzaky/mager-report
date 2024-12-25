@@ -13,11 +13,8 @@ export const useExportDailyReport = () => {
       const res = await dailyReportService.getMonthlyReports();
       if (res?.status === "success") {
         const exportData = res?.data?.map((report, index) => {
-          const taskDescriptions = report?.tasks?.map((task) => task.description) || [];
-          const taskTimestamps = report?.tasks?.map((task) => `${task.startTime} - ${task.endTime}`) || [];
-          const formattedTasks = taskDescriptions.length
-            ? taskDescriptions.map((description, i) => `${description} (${taskTimestamps[i]})`)
-            : ["No tasks available"];
+          const taskDescriptions = report?.tasks?.map((task, i) => `${i + 1}. ${task.description}`).join(", ") || "";
+          const taskTimestamps = report?.tasks?.map((task, i) => `${i + 1}. ${task.startTime} - ${task.endTime}`).join(", ") || "";
 
           return {
             No: index + 1,
@@ -28,7 +25,8 @@ export const useExportDailyReport = () => {
               month: "long",
               day: "numeric",
             }).format(new Date(report?.updated_at ?? report?.created_at)),
-            Tasks: formattedTasks,
+            Tasks: taskDescriptions,
+            Timestamps: taskTimestamps,
           };
         });
 
